@@ -1,0 +1,21 @@
+%br/
+.case-card.shadow-sm.mx-auto.pt-3{style: 'width: 450px;'}
+  %br/
+  %h2.text-center.mb-2 Log in
+  %br/
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .field.form-group
+      = f.label :email
+      = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control"
+      %br/
+    .field.form-group
+      = f.label :password
+      = f.password_field :password, autocomplete: "current-password", class: "form-control"
+    %br/
+    .actions.form-group.mt-1
+      = f.submit "Log in", class: 'form-control btn btn-primary'
+      %br/
+      %br/
+  = render "devise/shared/links"
+%br
+%br

@@ -1,0 +1,15 @@
+.col-md-6
+  .card.shadow-sm.p-0
+    .card-title.text-center.mt-3
+      %h6= title
+    .card-footer.p-3.text-center.bg-white
+      .btn-group
+        = link_to view_path, class: 'btn btn-outline-secondary btn-sm' do
+          %i.fa.fa-eye.m-0
+          View
+        = link_to "#{view_path}?format=csv", class: 'btn btn-outline-primary btn-sm ms-2' do
+          %i.fa.fa-download.m-0
+          CSV
+        = link_to "#{view_path}?format=pdf", class: 'btn btn-outline-primary btn-sm ms-2' do
+          %i.fa.fa-download.m-0
+          PDF

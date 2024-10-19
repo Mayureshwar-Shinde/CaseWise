@@ -1,0 +1,82 @@
+%ul.list-unstyled
+  %li.mb-2
+    %strong Type:
+    %span.text-muted= @audit.auditable_type
+
+  %li.mb-2
+    %strong Action:
+    %span.text-muted= @audit.action.capitalize
+
+  %li.mb-2
+    %strong Performed By:
+    %span.text-secondary= "#{@audit.user.full_name} (#{@audit.user.role_type.gsub('_', ' ').capitalize})"
+
+  - if @audit.auditable
+    %li.mb-2
+      %strong Case Number:
+      = link_to "#{@audit.auditable.case.case_number}", case_managers_case_path(@audit.auditable.case), class: 'text-decoration-none'
+
+%hr.mt-0
+
+- if @audit.action == 'create'
+  %p.text-secondary
+    %strong Appointment Details:
+    %br
+    %strong Date:
+    %span.text-muted= @audit.auditable.date.strftime("%A, %d %B %Y")
+    %br
+    %strong Time:
+    %span.text-muted= @audit.auditable.time.strftime("%I:%M %p")
+    %br
+    %strong Status:
+    %span.test-muted= @audit.auditable.status.capitalize
+    %br
+    %strong Case Manager:
+    %span.test-muted= @audit.auditable.case_manager.full_name
+    %br
+    %strong Dispute Analyst:
+    %span.test-muted= @audit.auditable.dispute_analyst.full_name
+
+- else
+  %div.mt-4
+    %h5 Changes
+    %p.text-muted
+      - changes = @audit.audited_changes
+
+      - if changes["date"]
+        %p
+          %strong Date:
+          %br
+          From: 
+          %span.text-muted= changes["date"][0].strftime("%A, %d %B %Y")
+          %br
+          To: 
+          %span.text-muted= changes["date"][1].strftime("%A, %d %B %Y")
+
+      - if changes["time"]
+        %p
+          %strong Time:
+          %br
+          From: 
+          %span.text-muted= changes["time"][0].strftime("%I:%M %p")
+          %br
+          To: 
+          %span.text-muted= changes["time"][1].strftime("%I:%M %p")
+
+      - if changes["status"]
+        %p
+          %strong Status:
+          %br
+          From: 
+          %span.text-muted= Appointment.statuses.key(changes["status"][0]).gsub('_', ' ').capitalize
+          %br
+          To: 
+          %span.text-muted= Appointment.statuses.key(changes["status"][1]).gsub('_', ' ').capitalize
+
+
+%hr.mt-4
+
+%ul.list-unstyled
+  %li
+    %strong At:
+    %span.text-secondary= @audit.created_at.strftime("%A, %d %B %Y at %I:%M %p")

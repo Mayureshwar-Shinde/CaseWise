@@ -1,0 +1,78 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+/*  background-color: #DFE3E6 !important;*/
+  background-color: #f7f8f8 !important;
+/*  background-color: white|f6f9ff !important;*/
+}
+
+
+/* when sidebar is present */
+.main-content {
+  margin-left: 270px;
+}
+
+
+/* alerts and notifications */
+.alert-notice-wrapper {
+  margin-top: 60px !important;
+}
+.notice {
+  color: rgb(42,204,2) !important;
+}
+.alert {
+  color: rgb(255,55,0) !important;
+}
+
+
+/* login, register and editprofile */
+.case-card {
+  background-color: white;
+  border: solid gainsboro 1px;
+  border-radius: 10px;
+  padding: 3rem !important;
+}
+th a {
+  text-decoration: none;
+  color: black;
+}
+
+
+/* input fields */
+.form-control:not(button), .form-select {
+  border: solid silver 1px !important;
+}
+input[type="search"] {
+  margin: 10px; /* Adjust the value as needed */
+}
+
+
+/* history/note/appointment */
+.nav-tabs .nav-link {
+  border-radius: 0; /* Removes the rounded corners from each tab */
+}
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6; /* Add a solid line under the tabs */
+}
+.tab-pane.active {
+  padding: 1.5rem;
+  padding-top: 0;
+  background-color: white;
+  border: solid silver 1px;
+  border-top: 0;
+  border-radius: 0;
+}

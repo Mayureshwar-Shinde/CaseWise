@@ -1,0 +1,93 @@
+%ul.list-unstyled
+  %li.mb-2
+    %strong Type:
+    %span.text-muted= @audit.auditable_type
+
+  %li.mb-2
+    %strong Action:
+    %span.text-muted= @audit.action.capitalize
+
+  %li.mb-2
+    %strong By:
+    %span.text-secondary= "#{@audit.user.full_name} (#{@audit.user.role_type.gsub('_', ' ').capitalize})"
+
+  - if @audit.auditable
+    - @case = @audit.auditable
+    %li.mb-3
+      %strong Case Number:
+      = link_to @case.case_number, case_managers_case_path(@case), class: 'text-decoration-none'
+
+%hr.mt-0
+
+- if @audit.action == 'create'
+  %div.mb-4
+    %p.text-secondary
+      %strong Title:
+      %span= @case.title
+
+    %p.text-secondary
+      %strong Description:
+      %span= @case.description
+
+    %p.text-secondary
+      %strong Status:
+      %span.text-muted= @case.status.capitalize
+
+    %p.text-secondary
+      %strong Assigned To:
+      - if @case.assigned_to
+        %span.text-muted= @case.assigned_to.full_name
+      - else
+        %span.text-muted Unassigned
+
+- else
+  %h5.mt-3 Changes
+  %p.text-muted
+    - changes = @audit.audited_changes
+
+    - if changes["title"]
+      %p
+        %strong Title:
+        %br
+        From: 
+        %span.text-muted= changes["title"][0]
+        %br
+        To: 
+        %span.text-muted= changes["title"][1]
+
+    - if changes["description"]
+      %p
+        %strong Description:
+        %br
+        From: 
+        %span.text-muted= changes["description"][0]
+        %br
+        To: 
+        %span.text-muted= changes["description"][1]
+
+    - if changes["status"]
+      %p
+        %strong Status:
+        %br
+        From:
+        %span.text-muted= Case.statuses.key(changes["status"][0]).gsub('_', ' ').capitalize
+        %br
+        To:
+        %span.text-muted= Case.statuses.key(changes["status"][1]).gsub('_', ' ').capitalize
+
+    - if changes["assigned_to_id"]
+      %p
+        %strong Assigned To:
+        %br
+        From:
+        %span.text-muted #{changes["assigned_to_id"][0].nil? ? 'Unassigned' : User.find(changes["assigned_to_id"][0]).full_name}
+        %br
+        To:
+        %span.text-muted= User.find(changes["assigned_to_id"][1]).full_name
+
+%hr.mt-0
+
+%ul.list-unstyled
+  %li
+    %strong At:
+    %span.text-secondary= @audit.created_at.strftime("%A, %d %B %Y at %I:%M %p")

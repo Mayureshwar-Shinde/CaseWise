@@ -1,0 +1,16 @@
+= stylesheet_link_tag('navbar.css')
+
+%nav.navbar.navbar-expand-lg.border
+  .container-fluid
+    .navbar-brand
+      %i.fa.fa-balance-scale
+      %a.ms-1{href: root_path} CaseWise
+    - if user_signed_in?
+      %ul.navbar-nav.ml-auto.me-5
+        %li.nav-item.ms-3
+          - if current_user.avatar.attached?
+            = link_to edit_avatar_path do
+              = image_tag(current_user.avatar, :style => " width:40px; height:40px; border-radius:50%; object-fit:cover; border: solid gray 1px;")
+          - else
+            = link_to edit_avatar_path do
+              %span.material-symbols-outlined.dropdown{:style=>"font-size:39px; left:4px; top:2px; color: gray;"} account_circle

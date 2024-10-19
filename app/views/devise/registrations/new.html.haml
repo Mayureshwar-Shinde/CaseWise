@@ -1,0 +1,59 @@
+%br/
+.container-fluid.row
+  .col-md-7.offset-md-1.mx-auto.case-card.shadow-sm
+    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+      .cls{:style => "color: red;"}
+        = render "devise/shared/error_messages", resource: resource
+      %h2 Sign up
+      %br/
+      .row
+        .col-md-6
+          .field.form-group
+            = f.label :first_name
+            = f.text_field :first_name, class: "form-control"
+            %br/
+        .col-md-6
+          .field.form-group
+            = f.label :last_name
+            = f.text_field :last_name, class: "form-control"
+            %br/
+
+      .row
+        .col-md-4
+          .field.form-group
+            = f.label :age
+            = f.number_field :age, class: "form-control"
+          %br/
+        .col-md-4
+          .field.form-group
+            = f.label :date_of_birth
+            = f.date_field :date_of_birth, class: "form-control"
+          %br/
+        .col-md-4
+          .field.form-group
+            = f.label :email
+            = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control"
+          %br/
+
+      .row
+        .col-md-6
+          .field.form-group
+            = f.label :password
+            - if @minimum_password_length
+              %em
+                (#{@minimum_password_length} characters minimum)
+            = f.password_field :password, autocomplete: "new-password", class: "form-control"
+            %br/
+        .col-md-6
+          .field.form-group
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control"
+            %br/
+
+      %br/
+      .actions.form-group
+        = f.submit "Sign up", class:"form-control btn btn-primary"
+    %br/
+    = render "devise/shared/links"
+%br
+%br

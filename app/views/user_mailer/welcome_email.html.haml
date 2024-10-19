@@ -1,0 +1,79 @@
+%html
+  %head
+    :css
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f7;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      .email-container {
+        background-color: white;
+        width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .logo {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .logo img {
+        width: 100px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 36px;
+        color: #333;
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #666;
+        text-align: center;
+      }
+      .cta-button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 14px;
+        color: #aaa;
+      }
+
+  %body
+    .email-container
+      .logo
+        %img{src: 'https://i.postimg.cc/05zCjL03/illuminati.png', alt: 'CaseWise Logo'}
+      
+      %h1 Welcome to CaseWise!
+      
+      %p
+        Thank you for signing up for CaseWise, the best tool to manage and resolve cases efficiently.
+        We're thrilled to have you on board!
+      
+      %p
+        To get started, click the button below to log into your account and explore all the features we have to offer.
+
+      %a.cta-button{href: "http://localhost:3000/"}
+        Log into your account
+      
+      .footer
+        %p
+          If you have any questions, feel free to reach out to our support team at support@casewise.com.
+
+        %p
+          Best regards,
+          %br/
+          The CaseWise Team

@@ -1,0 +1,20 @@
+.modal-dialog
+  .modal-content.p-3
+    = form_with(model: @appointment, url: dispute_analysts_case_appointments_path(@case)) do |form|
+      .modal-body
+        %h5.ms-1.mb-3 Book Appointment
+        %hr
+        = form.label :date
+        = form.date_field :date, class: 'form-control'
+        %br/
+        = form.label :time
+        = form.time_field :time, class: 'form-control'
+        %br
+        %hr.mt-1.mb-0
+        = form.hidden_field :case_id, value: @appointment.case_id
+        = form.hidden_field :case_manager_id, value: @case.user_id
+        = form.hidden_field :dispute_analyst_id, value: current_user.id
+        = form.hidden_field :status, value: 'pending'
+        %br/
+        %button.btn.btn-outline-secondary.me-2{"data-bs-dismiss" => "modal", type: "button"} Close
+        = form.submit "Book", class: "btn btn-outline-primary"

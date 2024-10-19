@@ -1,0 +1,34 @@
+= stylesheet_link_tag('sidebar.css')
+
+.sidenav.collapsible
+  %br
+  %hr.text-white
+  %a{href: root_path}
+    %i.fa.fa-home.sm
+    Home
+
+  %button.dropdown-btn
+    %i.fa.fa-user.sm
+    MyProfile
+    %i.fa.fa-caret-down
+  .dropdown-container
+    %a{href: edit_avatar_path} Update Avatar
+    %a{href: edit_user_registration_path} Update personal data
+
+  %button.dropdown-btn
+    %i.fa.fa-clipboard.sm
+    Cases
+    %i.fa.fa-caret-down
+  .dropdown-container
+    %a{href: dispute_analysts_cases_path} List all Cases
+
+  %a{href: dispute_analysts_my_appointments_path}
+    %i.fa.fa-calendar-alt.sm
+    Appointments
+
+  = button_to destroy_user_session_path, method: :delete, class: 'signout-btn', form: { data: { turbo_confirm: 'Are you sure you want to sign out?' } } do
+    %i.fa.fa-power-off.sm
+    Sign out
+  %br
+
+= javascript_include_tag ('sidebar.js')

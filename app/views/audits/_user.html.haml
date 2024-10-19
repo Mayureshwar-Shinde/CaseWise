@@ -1,0 +1,78 @@
+%ul.list-unstyled
+  %li.mb-2
+    %strong Type:
+    %span.text-muted= @audit.auditable_type
+
+  %li.mb-2
+    %strong Action:
+    %span.text-muted= @audit.action.capitalize
+
+  - if @audit.user
+    %li.mb-2
+      %strong Performed By:
+      %span.text-secondary= "#{@audit.user.full_name} (#{@audit.user.role_type.gsub('_', ' ').capitalize})"
+
+
+%hr.mt-0
+
+%div.mt-4
+  %h5 Changes
+  %p.text-muted
+    - changes = @audit.audited_changes
+
+    - if changes["first_name"]
+      %p
+        %strong First Name:
+        %br
+        From: 
+        %span.text-muted= changes["first_name"][0]
+        %br
+        To: 
+        %span.text-muted= changes["first_name"][1]
+
+    - if changes["last_name"]
+      %p
+        %strong Last Name:
+        %br
+        From: 
+        %span.text-muted= changes["last_name"][0]
+        %br
+        To: 
+        %span.text-muted= changes["last_name"][1]
+
+    - if changes["email"]
+      %p
+        %strong Email:
+        %br
+        From: 
+        %span.text-muted= changes["email"][0]
+        %br
+        To: 
+        %span.text-muted= changes["email"][1]
+
+    - if changes["age"]
+      %p
+        %strong Age:
+        %br
+        From: 
+        %span.text-muted= changes["age"][0]
+        %br
+        To: 
+        %span.text-muted= changes["age"][1]
+
+    - if changes["date_of_birth"]
+      %p
+        %strong Date of Birth:
+        %br
+        From: 
+        %span.text-muted= changes["date_of_birth"][0]
+        %br
+        To: 
+        %span.text-muted= changes["date_of_birth"][1]
+
+%hr.mt-4
+
+%ul.list-unstyled
+  %li
+    %strong At:
+    %span.text-secondary= @audit.created_at.strftime("%A, %d %B %Y at %I:%M %p")

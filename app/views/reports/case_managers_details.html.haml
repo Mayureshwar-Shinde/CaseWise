@@ -1,0 +1,50 @@
+.container-fluid
+  .row
+    .col-md-11.offset-md-1.mx-auto
+      = link_to dashboard_path, class: 'd-inline' do
+        %i.fa.fa-arrow-left
+        Back to Dashboard
+      %br/
+      %br/
+      %h2 Case Managers Details
+      %hr.mb-4
+      %table.table.table-bordered.table-responsive.text-center
+        %thead
+          %tr
+            %th ID
+            %th Name
+            %th Age
+            %th Date of birth
+            %th Email
+            %th Cases Reported
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= user.id
+              %td= user.full_name
+              %td= user.age
+              %td= user.date_of_birth
+              %td= user.email
+              %td= user.cases_reported_count
+
+      .btn-group
+        = link_to case_managers_details_reports_path(format: :csv), class: 'btn btn-outline-secondary btn-sm d-inline' do
+          %i.fa.fa-download
+          Download CSV
+        = link_to case_managers_details_reports_path(format: :pdf), class: 'btn btn-outline-primary btn-sm ms-2' do
+          %i.fa.fa-download
+          Download PDF
+
+- if @users.total_entries > 20
+  %div.pagination-container
+    .digg_pagination
+      = will_paginate @users
+%br/
+%br/
+
+
+:css
+  .table th {
+    background-color: #0077cc;
+    color: white;
+  }

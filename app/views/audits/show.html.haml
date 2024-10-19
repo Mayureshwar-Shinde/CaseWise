@@ -1,0 +1,13 @@
+.container-fluid
+  .row
+    .col-md-9.offset-md-1.mx-auto
+      = link_to audits_path, class: 'd-inline' do
+        %i.fa.fa-arrow-left{style: 'font-size: 25px;'}
+      .card.pb-4
+        %h3 Log Details
+        %hr.mt-1
+          = render "audits/#{@audit.auditable_type.downcase}"
+
+%br/
+%br/
+%br/

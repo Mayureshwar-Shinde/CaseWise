@@ -1,0 +1,52 @@
+%ul.list-unstyled
+  %li.mb-2
+    %strong Type:
+    %span.text-muted= @audit.auditable_type
+
+  %li.mb-2
+    %strong Action:
+    %span.text-muted= @audit.action.capitalize
+
+  %li.mb-2
+    %strong By:
+    %span.text-muted= "#{@audit.user.full_name} (#{@audit.user.role_type.gsub('_', ' ').capitalize})"
+
+  - if @audit.auditable && @audit.auditable.case
+    - @case = @audit.auditable.case
+    %li
+      %strong Case Number:
+      = link_to @case.case_number, case_managers_case_path(@case), class: 'text-decoration-none'
+
+%hr.mt-0
+
+- if @audit.action == 'create'
+  %p.text-secondary
+    %strong Content:
+    %span= @audit.audited_changes["content"]
+
+- elsif @audit.action == 'update'
+  %div
+    %h5 Changes
+    %p.text-muted
+      - if @audit.audited_changes["content"]
+        %p
+          %strong Content:
+          %br
+          From: 
+          %span.text-muted= @audit.audited_changes["content"][0]
+          %br
+          To: 
+          %span.text-muted= @audit.audited_changes["content"][1]
+
+- else
+  %p.text-secondary
+    %strong Content:
+    %span= @audit.audited_changes["content"]
+
+
+%hr
+
+%ul.list-unstyled
+  %li
+    %strong At:
+    %span.text-secondary= @audit.created_at.strftime("%A, %d %B %Y at %I:%M %p")

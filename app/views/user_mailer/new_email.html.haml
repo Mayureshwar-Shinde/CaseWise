@@ -1,0 +1,88 @@
+%html
+  %head
+    :css
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f7;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      .email-container {
+        background-color: white;
+        width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .logo {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .logo img {
+        width: 100px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 28px;
+        color: #333;
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #666;
+      }
+      .cta-button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 14px;
+        color: #aaa;
+      }
+
+  %body
+    .email-container
+      .logo
+        %img{src: 'https://i.postimg.cc/05zCjL03/illuminati.png', alt: 'CaseWise Logo'}
+      
+      %h1 You've received a message regarding Case #{@communication.case.case_number}
+
+      %p
+        Dear
+        %strong #{@communication.to.full_name} #{','}
+
+      %p
+        %strong #{@communication.from.full_name}
+        has sent you the following message regarding the case titled "#{@communication.case.title}":
+
+      %hr
+      %p
+        %strong Subject: #{@communication.subject}
+      %p
+        %strong Message:
+        %br/
+        #{@communication.message}
+      %hr
+
+      %p
+        Please log in to your dashboard for more details or to respond.
+
+      %a.cta-button{href: "http://localhost:3000/#{@communication.from.role_type == 'case_manager' ? 'dispute_analysts' : 'case_managers'}/cases/#{@communication.case.id}"}
+        View Case
+      .footer
+        %p.text-center
+          If you have any questions, please reach out to support@casewise.com.
+          %br
+          Best regards,
+          The CaseWise Team

@@ -1,0 +1,13 @@
+%br/
+.container-fluid.row
+  .col-md-9.offset-md-1.mx-auto.case-card{style: "border-radius:10px; padding: 2.2rem !important"}
+    - if @note.errors.any?
+      .text-center.text-danger Content cant't be blank!
+    %h4.ms-1.mb-3 Edit Note
+    = form_with(model: @note, url: case_managers_case_note_path(@case, id: @note.id)) do |form|
+      = form.text_area :content, class: 'form-control'
+      = form.hidden_field :case_id, value: @note.case_id
+      = form.hidden_field :user_id, value: current_user.id
+      %br/
+      = link_to 'Back', case_managers_case_path(@case), class: 'btn btn-outline-secondary me-2'
+      = form.submit "Submit", class: "btn btn-outline-primary"

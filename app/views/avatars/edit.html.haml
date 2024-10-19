@@ -1,0 +1,30 @@
+.case-card.mx-auto.shadow-sm{style: 'width: 450px;'}
+  .text-center
+    %h2 Update Avatar
+    %hr.mb-4
+    - if current_user.avatar.attached?
+      = image_tag (current_user.avatar), :style => "width:170px; height:170px; object-fit:cover; border: solid gray 1px; border-radius: 50%;"
+      %br
+      %br
+    - else
+      %i.fa.fa-user.p-4{style: 'font-size: 100px; border: solid gray 1px; border-radius: 50%;'}
+      %br
+      %br
+
+  .text-center.text-danger
+    - if flash[:error]
+      %ul
+      - flash[:error].each do |e|
+        %li{style: 'list-style-type: none;'}= e
+  
+  %br
+  = form_with(model: current_user, url: avatar_path) do |form|
+    .form-group
+      = form.file_field :avatar, class: 'form-control'
+    %br
+    = form.submit 'Upload Avatar', class: "form-control btn btn-primary"
+  - if current_user.avatar.attached?
+    %br
+    = button_to 'Delete avatar', avatar_path, class:'btn btn-outline-danger form-control', method: :delete
+%br
+%br

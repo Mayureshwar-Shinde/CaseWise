@@ -1,0 +1,16 @@
+.case-card.mx-auto.shadow-sm{style: 'width: 700px;'}
+  = render 'shared/error_messages', resource: @case
+  %h2 Create Case
+  %hr.mb-5
+  = form_with(model: @case, url: case_managers_cases_path) do |form|
+    .field.form-group
+      = form.label :title
+      = form.text_field :title, class: "form-control"
+      %br/
+    .field.form-group.mb-2
+      = form.label :description
+      = form.text_area :description, class: "form-control"
+      %br/
+    = form.submit "Create Case", class: 'form-control btn btn-primary'
+%br
+%br

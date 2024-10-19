@@ -1,0 +1,21 @@
+%br/
+.container-fluid.row
+  .col-md-6.offset-md-1.mx-auto.case-card
+    - if @appointment.errors.any?
+      = render "shared/error_messages", resource: @appointment
+    %h4.ms-1.mb-3 Edit Appointment
+    %hr.mt-0.mb-4
+    = form_with(model: @appointment, url: case_managers_case_appointment_path(@case, id: @appointment.id)) do |form|
+      = form.label :date
+      = form.date_field :date, class: 'form-control'
+      %br/
+      = form.label :time
+      = form.time_field :time, class: 'form-control'
+      %br/
+      = form.label :status
+      = form.select(:status, [["#{@appointment.status == 'pending' ? 'Pending' : 'Select'}", "#{@appointment.status}"], ['Cancelled','cancelled'], ['Scheduled','scheduled']], {}, {class: "form-select"})
+      %br
+      %hr.mb-4
+      .row
+        .col= link_to 'Back', :back, class: 'btn btn-outline-secondary', style: 'width: 100%;'
+        .col= form.button 'Update Appointment', class: 'btn btn-outline-primary form-control border-primary'

@@ -1,0 +1,62 @@
+= stylesheet_link_tag('paginator.css')
+
+.container-fluid.row
+  .col-md-11.mx-auto.p-5.pb-4.pt-5.case-card
+    .display-6{style: 'font-size: 34px;'} Cases
+    %hr.border-secondary.border-2.mt-2
+    = search_form_for @q, url: case_managers_cases_path do |f|
+      = f.label :status
+      = f.select(:status_eq, [['All', ''], ['Open', 0], ['In progress', 1], ['Resolved', 2], ['Closed', 3]], {}, {class: "form-select d-inline me-2", style: "width:134px;"})
+      -#= f.select(:status_eq, User.pluck(:first_name), {include_blank: true}, {class: "form-select d-inline me-4", style: "width:134px;"})
+      = f.search_field :case_number_eq, placeholder: 'Case No', class: 'form-control d-inline me-2', style: 'width: 150px;'
+      = f.search_field :user_first_name_or_user_last_name_cont, placeholder: 'Case manager', class: 'form-control d-inline me-2', style: 'width: 150px;'
+      = f.search_field :assigned_to_first_name_or_assigned_to_last_name_cont, placeholder: 'Dispute analyst', class: 'form-control d-inline me-2', style: 'width: 150px;'
+      = f.search_field :title_cont, placeholder: 'Title', class: 'form-control d-inline me-3', style: 'width: 160px;'
+      = f.button(type: 'submit', class: 'btn btn-outline-success') do
+        %i.fa.fa-search
+        Search
+
+    %table.table.table-responsive.rounded-3.overflow-hidden
+      %thead.table-primary
+        %tr
+          %th= sort_link(@q, :case_number, 'Case No.')
+          %th= sort_link(@q, :title, default_order: :desc)
+          -#%th= sort_link(@q, :user_first_name, 'Reported By')
+          %th= link_to 'Reported By', sort: 'user'
+          %th= link_to 'Assigned To', sort: 'assigned_to'
+          %th= sort_link(@q, :status, 'Status')
+          %th= sort_link(@q, :updated_at, 'Updated At', default_order: :desc)
+        %br/
+      %tbody
+        - @cases.each do |c|
+          %tr
+            %td
+              %a{href: case_managers_case_path(c)}= c.case_number
+            %td
+              %strong= c.title
+              %div.small.text-muted Created: #{c.created_at.strftime("%d %b %y")}
+            %td= c.user.full_name
+            - if current_user.case_manager?
+              %td
+                - if c.assigned_to_id.nil?
+                  %span.text-muted Not assigned
+                - else
+                  = c.assigned_to.full_name
+            %td
+              - case c.status
+              - when 'in_progress'
+                %span.badge.bg-warning In Progress
+              - when 'resolved'
+                %span.badge.bg-success Resolved
+              - when 'open'
+                %span.badge.bg-danger Open
+              - else
+                %span.badge.bg-secondary Closed
+            %td
+              %small.text-muted= time_ago_in_words(c.updated_at) + " ago"
+    %br/
+    %div.pagination-container
+      .digg_pagination
+        = will_paginate @cases, container: false
+%br/
+%br/

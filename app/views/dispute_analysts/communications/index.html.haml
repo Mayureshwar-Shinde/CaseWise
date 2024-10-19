@@ -1,0 +1,42 @@
+.case-card.m-5.mb-4.mt-0.pb-4
+  .display-6{style: 'font-size: 29px;'}
+    Case 
+    = link_to "#{@case.case_number}", dispute_analysts_case_path(@case), class: 'text-decoration-none'
+    Communications
+
+  %hr.mt-2.mb-4.text-secondary
+    = search_form_for @q, url: dispute_analysts_case_communications_path do |f|
+      = f.label :message_type
+      = f.select(:message_type_eq, [['All', ''], ['SMS', 0], ['Email', 1]], {}, {class: "form-select d-inline me-2", style: "width:134px;"})
+      = f.button(type: 'submit', class: 'ms-2 btn btn-outline-primary') do
+        %i.fa.fa-filter
+        Filter
+      .ms-3.d-inline
+        = link_to dispute_analysts_case_communications_path, class: 'btn btn-outline-secondary' do
+          %i.fas.fa-filter-circle-xmark
+          Clear filter
+
+  %br
+  %table.table.border
+    %tr
+      %th= link_to 'From', sort: 'from'
+      %th= link_to 'To', sort: 'to'
+      %th= sort_link(@q, :subject, 'Subject')
+      %th= sort_link(@q, :message_type, 'Message Type')
+      %th= sort_link(@q, :created_at, 'Sent At')
+    - @communications.each do |communication|
+      %tr
+        %td= communication.from.full_name
+        %td= communication.to.full_name
+        %td= communication.subject
+        %td= communication.message_type.capitalize
+        %td= communication.created_at.strftime("%d %b %Y, %I:%M %p")
+  
+  %br
+  - if @communications.count > 10
+    %div.pagination-container
+      .digg_pagination
+        = will_paginate @communications
+
+%br/
+      

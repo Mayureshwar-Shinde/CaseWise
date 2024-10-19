@@ -1,0 +1,16 @@
+.modal-dialog
+  .modal-content.p-3
+    .modal-body
+      %h4 SMS
+      %hr.mt-2
+      = form_with(model: @communication, url: dispute_analysts_case_communications_path(@case)) do |form|
+        = form.label :subject
+        = form.text_field :subject, class: 'form-control'
+        %br/
+        = form.label :message
+        = form.text_area :message, class: 'form-control'
+        = form.hidden_field :from_id, value: current_user.id
+        = form.hidden_field :to_id, value: @case.user_id
+        %br
+        %button.btn.btn-outline-secondary.me-2{"data-bs-dismiss" => "modal", type: "button"} Close
+        = form.submit 'Send SMS', class: 'btn btn-warning'

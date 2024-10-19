@@ -1,0 +1,2 @@
+module CaseManagers::NotesHelper
+end

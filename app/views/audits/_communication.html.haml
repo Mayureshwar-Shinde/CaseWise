@@ -1,0 +1,47 @@
+%ul.list-unstyled
+  %li.mb-2
+    %strong Type:
+    %span.text-muted= @audit.auditable_type
+
+  %li.mb-2
+    %strong Action:
+    %span.text-muted= @audit.action.capitalize
+
+  %li.mb-2
+    %strong Performed By:
+    %span.text-muted= "#{@audit.user.full_name} (#{@audit.user.role_type.gsub('_', ' ').capitalize})"
+
+  - if @audit.auditable
+    %li.mb-2
+      %strong Case Number:
+      = link_to "#{@audit.auditable.case.case_number}", case_managers_case_path(@audit.auditable.case), class: 'text-decoration-none'
+
+%hr.mt-0
+
+%div
+  %p.text-secondary
+    %strong Subject:
+    %span= @audit.auditable.subject
+
+  %p.text-secondary
+    %strong Message:
+    %span= @audit.auditable.message
+
+  %p.text-secondary
+    %strong Message Type:
+    %span= @audit.auditable.message_type.capitalize
+
+  %p.text-secondary
+    %strong From:
+    %span= User.find(@audit.auditable.from_id).full_name
+
+  %p.text-secondary
+    %strong To:
+    %span= User.find(@audit.auditable.to_id).full_name
+
+%hr
+
+%ul.list-unstyled
+  %li
+    %strong At:
+    %span.text-secondary= @audit.created_at.strftime("%A, %d %B %Y at %I:%M %p")

@@ -1,0 +1,37 @@
+%br
+%h4 Notes
+%hr.mt-0.mb-2
+%br
+- @notes.each do |note|
+  .d-flex.justify-content-between.align-items-center
+    .d-flex.align-items-center
+      = image_tag(note.user.avatar, :style => " width:34px; height:34px; border-radius:50%; object-fit:cover; border: solid gray 1px; margin-right: 8px;")
+      %h6.mb-0
+        #{"#{note.user.full_name} | "}
+      %small.text-muted.ms-2
+        = time_ago_in_words(note.updated_at) + " ago"
+    - if note.user == current_user
+      .div
+        = link_to edit_dispute_analysts_case_note_path(@case, note), style: 'font-size: 15px;', class: 'text-decoration-none me-2' do
+          %i.fas.fa-pen.footer-icon
+            %span.tooltip Edit
+        = link_to dispute_analysts_case_note_path(@case, note), style: 'font-size: 15px;', data: { turbo_confirm: 'Are you sure', turbo_method: :delete} do
+          %i.fas.fa-trash.footer-icon
+            %span.tooltip Delete
+  %hr.mt-1.mb-2
+  .ms-5.me-3= note.content
+  .mb-2
+  %br
+- if @notes.count > 5
+  %div.pagination-container
+    .digg_pagination
+      = will_paginate @notes
+
+
+
+
+= stylesheet_link_tag('paginator.css')
+:css
+  .digg_pagination a, .digg_pagination span, .digg_pagination em {
+    padding: 0.08em 0.45em;
+  }

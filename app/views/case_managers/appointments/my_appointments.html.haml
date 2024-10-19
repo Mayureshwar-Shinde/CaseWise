@@ -1,0 +1,57 @@
+.case-card.m-5.mb-4.mt-0.pb-4
+  .display-6{style: 'font-size: 29px;'} Appointments
+
+  %hr.mt-2.mb-4.text-secondary
+    = search_form_for @q, url: case_managers_my_appointments_path do |f|
+      = f.label :status
+      = f.select(:status_eq, [['All', ''], ['Scheduled', 0], ['Pending', 1], ['Completed', 2], ['Cancelled', 3]], {}, {class: "form-select d-inline me-2", style: "width:134px;"})
+      = f.button(type: 'submit', class: 'ms-2 btn btn-outline-primary') do
+        %i.fa.fa-filter
+        Filter
+      .ms-3.d-inline
+        = link_to case_managers_my_appointments_path, class: 'btn btn-outline-secondary' do
+          %i.fas.fa-filter-circle-xmark
+          Clear filter
+
+  %br
+  %table.table.border
+    %tr
+      %th
+        = link_to({ sort: 'case_number', direction: sort_direction }, class: 'd-inline-flex align-items-center') do
+          Case No.
+          - if params[:sort] == 'case_number'
+            - if params[:direction] == 'desc'
+              %span &#9660
+            - elsif params[:direction] == 'asc'
+              %span &#9650
+
+      %th= link_to 'Case Manager', sort: 'case_manager'
+      %th= link_to 'Dispute analyst', sort: 'dispute_analyst'
+      %th= sort_link(@q, :date, 'Date')
+      %th= sort_link(@q, :time, 'Time')
+      %th= sort_link(@q, :status, 'Status')
+      %th Action
+    - @appointments.each do |appointment|
+      %tr
+        %td= link_to "#{appointment.case.case_number}", case_managers_case_path(appointment.case)
+        %td= appointment.case_manager.full_name
+        %td= appointment.dispute_analyst.full_name
+        %td= appointment.date.strftime("%d %b %y")
+        %td= appointment.time.strftime("%l:%M%P")
+        %td{class: @color[appointment.status]}= appointment.status.capitalize
+        %td
+          - if appointment.datetime > DateTime.current
+            - @case = appointment.case
+            = link_to 'Edit', edit_case_managers_case_appointment_path(@case, appointment), class: 'btn btn-outline-secondary btn-sm'
+          - elsif appointment.status != 'completed'
+            - @case = appointment.case
+            = button_to 'Mark as Completed', complete_case_managers_case_appointment_path(@case, appointment), method: :put, class: 'btn btn-outline-success btn-sm'
+  
+  %br
+  - if @appointments.count > 10
+    %div.pagination-container
+      .digg_pagination
+        = will_paginate @appointments
+
+%br/
+      

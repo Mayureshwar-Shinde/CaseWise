@@ -1,0 +1,127 @@
+require: rubocop-rails
+
+AllCops:
+  DisabledByDefault: true
+  SuggestExtensions: false
+  Exclude:
+    - 'Gemfile'
+    - 'Rakefile'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+
+# checks the indentation of the right side of the multi-line assignment
+Layout/AssignmentIndentation:
+  Enabled: true
+
+# checks the indentation of the comments
+Layout/CommentIndentation:
+  Enabled: true
+
+# checks for the presence of two or more empty lines
+Layout/EmptyLines:
+  Enabled: true
+
+# checks whether different defs are seperated by two or more lines
+Layout/EmptyLineBetweenDefs:
+  Enabled: true
+
+# checks the indentation of the first key in a hash literal
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+# checks for incosistent indentation
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: normal
+
+# checks whether only spaces or tabs are used for indentation
+Layout/IndentationStyle:
+  Enabled: true
+
+# checks whether the identation space length is only 2
+Layout/IndentationWidth:
+  Enabled: true
+
+# checks whether the rescue and ensure keywords are aligned properly
+Layout/RescueEnsureAlignment:
+  Enabled: true
+
+# checks the spacing of inside and after block parameters
+Layout/SpaceAroundBlockParameters:
+  Enabled: true
+
+# checks for the presence of space befor the block
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+
+# checks whether block braces have or dont have surrounding space
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+
+# checks for surrounding space for hash literals
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+# checks for the appropriate presence of opening and closing parenthesis
+Lint/RequireParentheses:
+  Enabled: true
+
+# checks for the trailing white spaces
+Layout/TrailingWhitespace:
+  Enabled: true
+
+# checks for non-ascii characters
+Naming/AsciiIdentifiers:
+  Enabled: true
+
+# checks for the naming conventions for classes and modules
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+
+# checks for the usage of snake case for file names
+Naming/FileName:
+  Enabled: true
+
+# checks for the usage of snake case for methods names
+Naming/MethodName:
+  Enabled: true
+
+# checks whether predicate methods end with a question mark
+Naming/PredicateName:
+  Enabled: true
+
+# checks whether the variable are named as expected
+Naming/VariableName:
+  Enabled: true
+
+# checks for the usage of and,or &&,|| as per the conditions
+Style/AndOr:
+  Enabled: true
+
+# checks for the single line do end block
+Style/BlockDelimiters:
+  Enabled: true
+
+# checks the whether valid hash syntax is used
+Style/HashSyntax:
+  Enabled: true
+
+# checks for the usage of underscores for large numeric values
+Style/NumericLiterals:
+  Enabled: true
+
+# checks for the consistent use of string literals (double quotes for non-interpolated strings, single quotes for interpolated strings)
+Style/StringLiterals:
+  Enabled: true
+  Exclude:
+    - 'app/mailers/application_mailer.rb'
+    - 'config.ru'
+    - 'spec/rails_helper.rb'
+
+Style/SymbolArray:
+  Enabled: true
+
+Style/WordArray:
+  Enabled: true

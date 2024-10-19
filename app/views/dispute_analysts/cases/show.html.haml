@@ -1,0 +1,97 @@
+= stylesheet_link_tag('case_profile.css')
+
+.container-fluid
+  .row
+    .col-md-9.offset-md-1.mx-auto
+      .case-card{style: 'border-radius: 10px; padding: 2rem!important;'}
+
+        .d-flex.justify-content-between.align-items-center
+          .d-flex.align-items-center
+            %h4.mb-0{:style => 'margin-right: 10px;'}
+              #{@case.case_number}
+            - case @case.status
+              - when 'in_progress'
+                %span.badge.bg-warning In Progress
+              - when 'resolved'
+                %span.badge.bg-success Resolved
+              - when 'open'
+                %span.badge.bg-danger Open
+              - else
+                %span.badge.bg-secondary Closed
+          = link_to edit_dispute_analysts_case_path(@case), style: 'font-size: 20px;' do
+            %i.fas.fa-edit.footer-icon
+              %span.tooltip Edit
+
+        %hr
+        .p-2
+          %h4.card-title
+            = @case.title
+          %p.card-text{style: "font-size:15px"}
+            = @case.description  
+
+          %hr
+          %ul.list-unstyled{style: "font-size:15px;"}
+            %li
+              %strong Case Owner:
+              = @case.user.full_name
+            %li
+              %strong Assigned to:
+              = @case.assigned_to_id.nil? ? 'Unassigned' : @case.assigned_to.full_name
+            %li
+              %strong Created at:
+              = @case.created_at.strftime("%B %d %Y, %l:%M%P")
+            - if @case.status == 'Resolved'
+              %li
+                %strong Resolved at:
+                = @case.updated_at.strftime("%B %d %Y, %l:%M%P")
+            - else
+              %li
+                %strong Updated at:
+                = @case.updated_at.strftime("%B %d %Y, %l:%M%P")
+
+        - unless @case.status == 'closed'
+          %hr.mt-0.mb-2
+          = link_to root_path, style: 'font-size: 20px; text-decoration: none', data: { bs_toggle: 'modal', bs_target: '#smsModal' } do
+            %i.fas.fa-sms.me-3.footer-icon
+              %span.tooltip SMS
+          = link_to root_path, style: 'font-size: 20px; text-decoration: none', data: { bs_toggle: 'modal', bs_target: '#emailModal' } do
+            %i.fas.fa-envelope.me-3.footer-icon
+              %span.tooltip Email
+          = link_to root_path, style: 'font-size: 20px; text-decoration: none', data: { bs_toggle: 'modal', bs_target: '#appointmentModal' } do
+            %i.fas.fa-calendar.me-3.footer-icon
+              %span.tooltip Book Appointment
+          = link_to '#', style: 'font-size: 20px; text-decoration: none', data: { bs_toggle: 'modal', bs_target: '#exampleModal' } do
+            %i.fas.fa-sticky-note.footer-icon
+              %span.tooltip Add Note
+          .d-inline.m-3{style: 'font-size: 25px;'}
+            |
+          = link_to dispute_analysts_case_appointments_path(@case), style: 'font-size: 20px; text-decoration: none' do
+            %i.fas.fa-calendar-alt.me-3.footer-icon
+              %span.tooltip Appointments
+          = link_to dispute_analysts_case_communications_path(@case), style: 'font-size: 20px; text-decoration: none' do
+            %i.fas.fa-address-card.me-3.footer-icon
+              %span.tooltip Communications
+      %br/
+
+    .container-fluid
+      .row
+        .col-md-9.offset-md-1.mx-auto
+          .case-card.pt-2.pb-4= render 'dispute_analysts/notes/index_notes'
+
+
+#exampleModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", tabindex: "-1", "data-bs-backdrop" => "static", "data-bs-keyboard" => "false"}
+  = render 'dispute_analysts/notes/new_note'
+
+#appointmentModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "appointmentModalLabel", tabindex: "-1", "data-bs-backdrop" => "static", "data-bs-keyboard" => "false"}
+  = render 'dispute_analysts/appointments/new_appointment'
+
+#emailModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "emailModalLabel", tabindex: "-1", "data-bs-backdrop" => "static", "data-bs-keyboard" => "false"}
+  = render 'dispute_analysts/communications/new_email'
+
+#smsModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "smsModalLabel", tabindex: "-1", "data-bs-backdrop" => "static", "data-bs-keyboard" => "false"}
+  = render 'dispute_analysts/communications/new_sms'
+
+
+
+%br/
+%br/

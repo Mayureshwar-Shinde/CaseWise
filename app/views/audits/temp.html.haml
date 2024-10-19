@@ -1,0 +1,40 @@
+- def hello
+  - @cases = Case.all
+  - @cases.count
+  - return @cases.last.case_number
+
+%h2 Hello world
+= hello
+
+%h4= @audit.user.full_name
+
+= @audit.id
+%br/
+= @audit.auditable_id
+%br/
+= @audit.auditable_type
+%br/
+= @audit.associated_id
+%br/
+= @audit.associated_type
+%br/
+= @audit.user_id
+%br/
+= @audit.user_type
+%br/
+= @audit.username
+%br/
+= @audit.action
+%br/
+= @audit.audited_changes
+%br/
+= @audit.version
+%br/
+= @audit.comment
+%br/
+= @audit.remote_address
+%br/
+= @audit.request_uuid
+%br/
+= @audit.created_at
+%br/

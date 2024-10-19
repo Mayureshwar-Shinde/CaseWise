@@ -1,0 +1,31 @@
+.container-fluid
+  .row
+    .col-md-11.mx-auto.p-5.mb-5{style: "background-color:white;"}
+      %h2 Dashboard
+      %hr.mb-5
+
+      .report-section{style: "background-color: #0299d1; height:50px; border-left: solid skyblue 8px; font-size:27px; margin: 0px 0px;"}
+        .text-white.ms-4.p-1 Users
+      %br
+      .row.p-2
+        .col.border.m-2.p-4
+          = line_chart User.group_by_day(:created_at).count, title: "User Creation", xtitle: "Date", ytitle: "Number of Users", download: {filename: 'User Creation'}
+        .col.border.m-2.p-4
+          = pie_chart User.group(:role_type).count, title: "User Distribution by Role", xtitle: "Role", ytitle: "Count", download: {filename: 'User Distribution by Role'}
+      .row.p-2
+        = render partial: 'report_card', locals: { title: 'Case Managers Details', view_path: case_managers_details_reports_path }
+        = render partial: 'report_card', locals: { title: 'Dispute Analysts Details', view_path: dispute_analysts_details_reports_path }
+
+      .report-section{style: "background-color: #0299d1; height:50px; border-left: solid skyblue 8px; font-size:27px; margin: 80px 0px; margin-bottom: 29px;"}
+        .text-white.ms-4.p-1 Cases
+      .row.p-2
+        .col.border.m-2.p-4
+          = pie_chart Case.group(:status).count, title: "Case Status Distribution", xtitle: "Status", ytitle: "Number of Cases", download: {filename: 'Case Status Distribution'}
+        .col.border.m-2.p-4
+          = line_chart Case.group_by_day(:created_at).count, title: "Case Creation Trend", xtitle: "Date", ytitle: "Number of Cases", download: {filename: 'Case Creation Trend'}
+      .row.p-2
+        .col.border.m-2.mt-0.p-4
+          = bar_chart Case.group(:user_id).count, title: "Case Distribution by Case Manager", xtitle: "Number of Cases", ytitle: "Case Manager ID", download: {filename: 'Case Distribution by Case Manager'}
+      .row.p-2
+        = render partial: 'report_card', locals: { title: 'Detailed Case Report', view_path: cases_details_reports_path }
+        = render partial: 'report_card', locals: { title: 'Case Status Distribution Report', view_path: case_status_distribution_reports_path }

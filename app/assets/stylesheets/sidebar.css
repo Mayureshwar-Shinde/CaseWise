@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+.sidenav {
+  height: 100%;
+  width: 260px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #ebf2ff; /* #ecf3fd; */
+  overflow-x: hidden;
+  padding-top: 20px;
+  transition: 0.3s ease;
+}
+
+.sidenav.collapsed {
+  width: 0;
+  padding-top: 0;
+  overflow: hidden;
+}
+
+.sidenav a, .dropdown-btn, .signout-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #545357;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.sidenav a:hover, .dropdown-btn:hover, .signout-btn:hover {
+  color: black;
+  background-color: #E3E4E6;
+}
+
+.main {
+  margin-left: 240px;
+  font-size: 20px;
+  padding: 0px 10px;
+  transition: margin-left 0.3s ease;
+}
+
+.main.collapsed {
+  margin-left: 0;
+}
+
+.active {
+  background-color: #E3E4E6;
+  border: solid #0299d1 3px;
+  border-radius: 10px;
+  color: black;
+}
+
+.dropdown-container {
+  display: none;
+  background-color: #f9fafd;
+  padding-left: 8px;
+}
+
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+.profile-container {
+  text-align: center;
+}
+
+i {
+  margin-right: 5px;
+}
+.sm { font-size: 18px; }

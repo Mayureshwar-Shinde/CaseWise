@@ -1,0 +1,59 @@
+.container-fluid.row
+  .col-md-11.mx-auto.p-5.pb-4.pt-5.case-card
+    .display-6{style: 'font-size: 34px;'} Logs
+    %hr.border-secondary.border-2.mt-3.mb-4
+    = search_form_for @q, url: audits_path do |f|
+      = f.label :type
+      = f.select(:auditable_type_eq, [['All', ''], ['User', 'User'], ['Case', 'Case'], ['Note', 'Note'], ['Appointment', 'Appointment'], ['Communication', 'Communication']], {}, {class: "form-select d-inline me-2", style: "width:162px;"})
+      = f.label :action
+      = f.select(:action_eq, [['All', ''], ['Create', 'create'], ['Update', 'update'], ['Destroy', 'destroy']], {}, {class: "form-select d-inline me-2", style: "width:162px;"})
+      = f.label :from
+      = f.date_field :created_at_gteq, placeholder: 'From', class: 'form-control d-inline me-2', style: 'width: 150px;'
+      = f.label :to
+      = f.date_field :created_at_lteq, placeholder: 'To', class: 'form-control d-inline me-2', style: 'width: 150px;'
+      = f.button(type: 'submit', class: 'ms-2 btn btn-outline-primary') do
+        %i.fa.fa-filter
+        Filter
+      .ms-3.d-inline
+        = link_to audits_path, class: 'btn btn-outline-secondary' do
+          %i.fas.fa-filter-circle-xmark
+          Clear
+
+    %table.table.table-custom.table-border
+      %thead
+        %tr
+          %th.px-4 User
+          %th= sort_link(@q, :auditable_type, 'Model', { sort: 'model' })
+          %th= sort_link(@q, :action, 'Action', { sort: 'action' })
+          %th= sort_link(@q, :created_at, 'Timestamp', { sort: 'timestamp' })
+          %th Details
+        %br/
+      %tbody
+        - @audits.each do |audit|
+          %tr
+            %td.px-4
+              .d-flex.align-items-center
+                = image_tag(audit.user.avatar, style: "width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: solid gray 1px; margin-right: 10px;")
+                .ml-2
+                  - if audit.user
+                    %div= audit.user.full_name
+                    .small.text-muted= "(#{audit.user.role_type.gsub('_', ' ').capitalize})"
+                  - else
+                    User
+            %td= audit.auditable_type
+            %td= audit.action.capitalize
+            %td
+              #{audit.created_at.strftime("%d %b %y")}
+              .small.text-muted #{audit.created_at.strftime("%l:%M%P")}
+            %td
+              = link_to audit_path(audit), class: 'btn btn-outline-primary btn-sm' do
+                %i.fa.fa-arrow-right
+
+    %br/
+    - if @audits.count > 10
+      %div.pagination-container
+        .digg_pagination
+          = will_paginate @audits, container: false
+
+%br/
+%br/

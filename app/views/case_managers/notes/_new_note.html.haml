@@ -1,0 +1,11 @@
+.modal-dialog.modal-lg
+  .modal-content.p-2
+    = form_with(model: @note, url: case_managers_case_notes_path(@case)) do |form|
+      .modal-body
+        %h5.ms-1.mb-3 Add Note
+        = form.text_area :content, class: 'form-control'
+        = form.hidden_field :case_id, value: @note.case_id
+        = form.hidden_field :user_id, value: current_user.id
+        %br/
+        %button.btn.btn-outline-secondary.me-2{"data-bs-dismiss" => "modal", type: "button"} Close
+        = form.submit 'Add', class: "btn btn-outline-primary"

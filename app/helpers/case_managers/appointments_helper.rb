@@ -1,0 +1,2 @@
+module CaseManagers::AppointmentsHelper
+end

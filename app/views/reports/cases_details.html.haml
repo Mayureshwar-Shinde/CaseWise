@@ -1,0 +1,56 @@
+.container-fluid
+  .row
+    .col-md-11.offset-md-1.mx-auto
+      = link_to dashboard_path, class: 'd-inline' do
+        %i.fa.fa-arrow-left
+        Back to Dashboard
+      %br/
+      %br/
+      %h2 Detailed Case Report
+      %hr.mb-4
+      %table.table.table-bordered.table-responsive
+        %thead
+          %tr
+            %th Case Number
+            %th Title
+            %th Status
+            %th Reported By
+            %th Assigned To
+            %th Created At
+            %th Updated At
+        %tbody
+          - @cases.each do |case_item|
+            %tr
+              %td= case_item.case_number
+              %td= case_item.title
+              %td= case_item.status
+              %td= case_item.user.full_name
+              %td
+                - if case_item.assigned_to
+                  #{case_item.assigned_to.full_name}
+                - else
+                  Unassigned
+              %td= case_item.created_at.strftime("%d %b %y")
+              %td= case_item.updated_at.strftime("%d %b %y")
+
+      .btn-group
+        = link_to cases_details_reports_path(format: :csv), class: 'btn btn-outline-secondary btn-sm d-inline' do
+          %i.fa.fa-download
+          Download CSV
+        = link_to cases_details_reports_path(format: :pdf), class: 'btn btn-outline-primary btn-sm ms-2' do
+          %i.fa.fa-download
+          Download PDF
+
+- if @cases.count > 20
+  %div.pagination-container
+    .digg_pagination
+      = will_paginate @cases
+%br/
+%br/
+
+
+:css
+  .table th {
+    background-color: #0077cc;
+    color: white;
+  }

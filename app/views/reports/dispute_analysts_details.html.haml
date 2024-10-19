@@ -1,0 +1,58 @@
+.container-fluid
+  .row
+    .col-md-11.offset-md-1.mx-auto
+      = link_to dashboard_path, class: 'd-inline' do
+        %i.fa.fa-arrow-left
+        Back to Dashboard
+      %br/
+      %br/
+      %h2 Dispute Analysts Details
+      %hr.mb-4
+      %table.table.table-bordered.table-responsive.text-center
+        %thead
+          %tr
+            %th ID
+            %th Name
+            %th Age
+            %th Date of birth
+            %th Email
+            %th Cases Assigned
+            %th Action
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= user.id
+              %td= user.full_name
+              %td= user.age
+              %td= user.date_of_birth
+              %td= user.email
+              %td= user.cases_assigned_count
+              %td
+                = link_to set_case_manager_report_path(user), style: 'font-size: 15px;', data: { turbo_confirm: 'Are you sure? Set the user as Case Manager', turbo_method: :delete } do
+                  %i.fas.fa-user-shield.footer-icon
+                -#= link_to set_case_manager_report_path(user), style: 'font-size: 15px;', data: { turbo_confirm: 'Are you sure', turbo_method: :delete} do
+                  %i.fas.fa-trash.footer-icon
+                    %span.tooltip Delete
+                -#= button_to 'Archive', archive_user_report_path(user), method: :delete, class: 'btn btn-outline-secondary btn-sm'
+
+      .btn-group
+        = link_to dispute_analysts_details_reports_path(format: :csv), class: 'btn btn-outline-secondary btn-sm d-inline' do
+          %i.fa.fa-download
+          Download CSV
+        = link_to dispute_analysts_details_reports_path(format: :pdf), class: 'btn btn-outline-primary btn-sm ms-2' do
+          %i.fa.fa-download
+          Download PDF
+
+- if @users.total_entries > 20
+  %div.pagination-container
+    .digg_pagination
+      = will_paginate @users
+%br/
+%br/
+
+
+:css
+  .table th {
+    background-color: #0077cc;
+    color: white;
+  }
